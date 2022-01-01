@@ -27,8 +27,12 @@ pipeline {
                 sshagent(['eks-machine']) {
                 sh "scp -o StrictHostKeyChecking=no nodeapp-service.yaml node-app.yaml ec2-user@3.22.98.102:/home/ec2-user"
                 script {
-                    sh "ssh ec2-user@3.22.98.102 kubectl apply -f ."
-                }
+                    try {
+                        sh "ssh ec2-user@3.22.98.102 kubectl apply -f ."
+                    }catch(error) {
+                        sh "ssh ec2-user@3.22.98.102 kubectl create -f ."
+                    
+                    }
                 }
             }
         }
