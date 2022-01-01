@@ -2,6 +2,7 @@ pipeline {
     agent any 
     environment {
         DOCKER_TAG = getDockerTag()
+        registryCredential = "sharkshub"
     }
     stages {
         stage ('Build docker image') {
@@ -11,8 +12,12 @@ pipeline {
         }
         stage ('Push docker image') {
             steps {
-                sh "docker push sharksdocker/nodeapp:${DOCKER_TAG}"
+                script {
+                    docker.withRegistry('',registryCredential){
+                    sh "docker push sharksdocker/nodeapp:${DOCKER_TAG}"
             }
+            }
+        }
         }
     }
 }
