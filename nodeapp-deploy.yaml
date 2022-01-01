@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment 
+metadata:
+  name: nodeapp 
+  labels:
+    app: nodeapp 
+spec:
+  replicas: 3
+  selector:
+    matchLabels: 
+      app: nodeapp 
+  template: 
+    metadata: 
+      app: nodeapp 
+    spec:
+      containers: 
+      - name: nodeapp 
+        image: sharksdocker/nodeapp:tagVersion
+        ports:
+        - containerPort: 8080
