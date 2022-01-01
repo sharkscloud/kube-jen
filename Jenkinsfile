@@ -9,6 +9,11 @@ pipeline {
                 sh "docker build . -t sharksdocker/nodeapp:${DOCKER_TAG}"
             }
         }
+        stage ('Push docker image') {
+            steps {
+                sh "docker push sharksdocker/nodeapp:${DOCKER_TAG}"
+            }
+        }
     }
 }
 def getDockerTag() {
